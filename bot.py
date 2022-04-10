@@ -63,6 +63,8 @@ def job():
             if count % 6 == 0:
                 bot.sendMessage(chat_id=chat_id, text="😂 *품절*",
                                 parse_mode="MarkdownV2")
+            else:
+                print("Out of stock")
 
 
 # 1시간 마다 실행
