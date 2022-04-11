@@ -29,7 +29,7 @@ def job():
 
     with requests.Session() as s:
         # 재고 확인 사이트 주소
-        url = os.getenv('BASE_URL')
+        url = os.getenv('SEARCH_URL')
         res = s.get(url)
         if res.status_code == requests.codes.ok:
             html = res.text
@@ -42,7 +42,8 @@ def job():
                 name = l.select('strong')[0].text
                 price = l.select('strong span')[0].text
                 price_format = int(re.findall("\d+", price)[0])
-                url = f"https://smartstore.naver.com{l.find('a').get('href')}".replace(
+                base_url = os.getenv('BASE_URL')
+                url = f"{base_url}{l.find('a').get('href')}".replace(
                     ".", "\\.")
 
                 # 10,000원 이상 제품
@@ -59,8 +60,8 @@ def job():
             bot.sendMessage(chat_id=chat_id,
                             text=f"🎉 *구매 가능* {url}", parse_mode="MarkdownV2")
         else:
-            # 품절 알림은 6번에 1번 메시지 전송
-            if count % 6 == 0:
+            # 품절 알림은 4번에 1번 메시지 전송
+            if count % 4 == 0:
                 bot.sendMessage(chat_id=chat_id, text="😂 *품절*",
                                 parse_mode="MarkdownV2")
             else:
