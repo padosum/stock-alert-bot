@@ -36,7 +36,7 @@ def job():
             soup = BeautifulSoup(html, 'html.parser')
             search_result = soup.select('#content ul')[2]
             products = search_result.select('li')
-            outOfStock = False
+            inStock = False
 
             for l in products:
                 name = l.select('strong')[0].text
@@ -46,17 +46,22 @@ def job():
                 url = f"{base_url}{l.find('a').get('href')}".replace(
                     ".", "\\.")
 
-                # 10,000원 이상 제품
-                if price_format < 10:
+                # 60,000원 이하 제품
+                if price_format > 60:
                     continue
 
-                outOfStock = True if len(
-                    l.select('span.text.blind')) == 0 else False
+                if len(l.select('span.text.blind')) == 0:
+                  inStock = True
+                else:
+                  if l.select('span.text.blind')[0].text == '일시 품절':
+                    inStock = False
+                  else:
+                    inStock = True
 
-                if outOfStock != False:
-                    break
+                # if inStock != False:
+                #     break
 
-        if outOfStock:
+        if inStock:
             bot.sendMessage(chat_id=chat_id,
                             text=f"🎉 *구매 가능* {url}", parse_mode="MarkdownV2")
         else:
