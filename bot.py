@@ -46,8 +46,8 @@ def job():
                 url = f"{base_url}{l.find('a').get('href')}".replace(
                     ".", "\\.")
 
-                # 60,000원 이하 제품
-                if price_format > 60:
+                # 가격 확인
+                if price_format > int(os.getenv('BASE_PRICE')):
                     continue
 
                 if len(l.select('span.text.blind')) == 0:
