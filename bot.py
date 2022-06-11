@@ -58,8 +58,8 @@ def job():
                   else:
                     inStock = True
 
-                # if inStock != False:
-                #     break
+                if inStock != False:
+                    break
 
         if inStock:
             bot.sendMessage(chat_id=chat_id,
