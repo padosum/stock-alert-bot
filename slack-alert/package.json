@@ -1,0 +1,21 @@
+{
+  "name": "slack-alert",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun run src/index.ts --watch"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@slack/web-api": "^7.8.0",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "node-schedule": "^2.1.1"
+  }
+}
